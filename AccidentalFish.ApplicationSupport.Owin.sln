@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccidentalFish.ApplicationSupport.Owin.Azure", "AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Azure.csproj", "{AC499F1B-FFF1-4722-90AB-0A3D5228601A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{EA377BC1-CB4A-44A8-A037-97EE6AB32561}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccidentalFish.ApplicationSupport.Owin", "AccidentalFish.ApplicationSupport.Owin\AccidentalFish.ApplicationSupport.Owin.csproj", "{85DF5BDC-B930-4A73-A530-3FC969006690}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HttpLogger", "Samples\HttpLogger\HttpLogger.csproj", "{F4B63FDD-C252-448A-8B34-40845780B93A}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{10FAF529-76F8-4C1F-AF6E-0BD7C83BA991}"
+	ProjectSection(SolutionItems) = preProject
+		AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Azure.nuspec = AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Azure.nuspec
+		AccidentalFish.ApplicationSupport.Owin\AccidentalFish.ApplicationSupport.Owin.nuspec = AccidentalFish.ApplicationSupport.Owin\AccidentalFish.ApplicationSupport.Owin.nuspec
+		package-nuget.ps1 = package-nuget.ps1
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AC499F1B-FFF1-4722-90AB-0A3D5228601A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC499F1B-FFF1-4722-90AB-0A3D5228601A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC499F1B-FFF1-4722-90AB-0A3D5228601A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC499F1B-FFF1-4722-90AB-0A3D5228601A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{85DF5BDC-B930-4A73-A530-3FC969006690}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{85DF5BDC-B930-4A73-A530-3FC969006690}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{85DF5BDC-B930-4A73-A530-3FC969006690}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{85DF5BDC-B930-4A73-A530-3FC969006690}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F4B63FDD-C252-448A-8B34-40845780B93A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F4B63FDD-C252-448A-8B34-40845780B93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F4B63FDD-C252-448A-8B34-40845780B93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F4B63FDD-C252-448A-8B34-40845780B93A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F4B63FDD-C252-448A-8B34-40845780B93A} = {EA377BC1-CB4A-44A8-A037-97EE6AB32561}
+	EndGlobalSection
+EndGlobal

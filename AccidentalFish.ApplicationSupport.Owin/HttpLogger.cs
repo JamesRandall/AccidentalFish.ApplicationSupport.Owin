@@ -75,12 +75,31 @@ namespace AccidentalFish.ApplicationSupport.Owin
             if (captureHeaders != null && captureHeaders.Any())
             {
                 capturedHeaders = new Dictionary<string, string[]>();
-                foreach (string headerName in captureHeaders)
+                if (captureHeaders.First() == "*")
                 {
-                    string[] values;
-                    if (headers.TryGetValue(headerName, out values))
+                    foreach (KeyValuePair<string, string[]> kvp in headers)
                     {
-                        capturedHeaders.Add(headerName, values);
+                        string[] existingHeader;
+                        if (capturedHeaders.TryGetValue(kvp.Key, out existingHeader))
+                        {
+                            existingHeader = existingHeader.Union(kvp.Value).ToArray();
+                        }
+                        else
+                        {
+                            existingHeader = kvp.Value;
+                        }
+                        capturedHeaders[kvp.Key] = existingHeader;
+                    }
+                }
+                else
+                {
+                    foreach (string headerName in captureHeaders)
+                    {
+                        string[] values;
+                        if (headers.TryGetValue(headerName, out values))
+                        {
+                            capturedHeaders.Add(headerName, values);
+                        }
                     }
                 }
             }

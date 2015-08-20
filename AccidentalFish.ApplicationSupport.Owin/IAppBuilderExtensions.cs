@@ -24,8 +24,8 @@ namespace AccidentalFish.ApplicationSupport.Owin
         /// <param name="captureRequestParams">True if you wish to capture query parameters, false if not.</param>
         /// <param name="captureRequestData">True if you wish to capture request data, false if not.</param>
         /// <param name="captureResponseData">True if you wish to capture response data, falise if not.</param>
-        /// <param name="captureRequestHeaders"></param>
-        /// <param name="captureResponseHeaders"></param>
+        /// <param name="captureRequestHeaders">To capture all request headers set a single array element of "*" otherwise specify the headers you wish to capture.</param>
+        /// <param name="captureResponseHeaders">To capture all response headers set a single array element of "*" otherwise specify the headers you wish to capture.</param>
         /// <param name="httpCorrelationHeaderKey">
         /// In order to tie together request and response logging the http logger needs a correlation ID. By default this is added to request and response
         /// headers so that HTTP logging can be tied together across services and clients. The default name for this header is http-correlation-id. If a

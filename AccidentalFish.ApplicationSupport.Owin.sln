@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{10FAF529
 	ProjectSection(SolutionItems) = preProject
 		AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Azure.nuspec = AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Azure.nuspec
 		AccidentalFish.ApplicationSupport.Owin\AccidentalFish.ApplicationSupport.Owin.nuspec = AccidentalFish.ApplicationSupport.Owin\AccidentalFish.ApplicationSupport.Owin.nuspec
+		AssemblyInfoCommon.cs = AssemblyInfoCommon.cs
 		package-nuget.ps1 = package-nuget.ps1
 	EndProjectSection
 EndProject

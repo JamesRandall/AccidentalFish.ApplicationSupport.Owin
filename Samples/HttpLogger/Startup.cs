@@ -14,7 +14,7 @@ namespace HttpLogger
             appBuilder.UseAzureHttpLogger("DefaultEndpointsProtocol=https;AccountName=<accountname>;AccountKey=<accountkey>",
                 captureRequestParams:true,
                 captureRequestHeaders: new [] {"Connection"},
-                captureResponseHeaders:new [] { "Content-Type", "Content-Length" });
+                captureResponseHeaders:new [] { "*" });
 
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();

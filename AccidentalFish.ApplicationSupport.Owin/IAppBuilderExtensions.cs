@@ -19,7 +19,7 @@ namespace AccidentalFish.ApplicationSupport.Owin
         /// Therefore by default none of this is captured.
         /// 
         /// </summary>
-        /// <param name="appBuilder">The app builder extended</param>
+        /// <param name="appBuilder">The OWIN app builder</param>
         /// <param name="loggerRepository">The repository to use for storing http logs</param>
         /// <param name="captureRequestParams">True if you wish to capture query parameters, false if not.</param>
         /// <param name="captureRequestData">True if you wish to capture request data, false if not.</param>
@@ -28,12 +28,11 @@ namespace AccidentalFish.ApplicationSupport.Owin
         /// <param name="captureResponseHeaders">To capture all response headers set a single array element of "*" otherwise specify the headers you wish to capture.</param>
         /// <param name="httpCorrelationHeaderKey">
         /// In order to tie together request and response logging the http logger needs a correlation ID. By default this is added to request and response
-        /// headers so that HTTP logging can be tied together across services and clients. The default name for this header is http-correlation-id. If a
+        /// headers so that HTTP logging can be tied together across services and clients. The default name for this header is correlation-id. If a
         /// correlation ID is passed in in the header then it will be used, if no correlation ID is passed in then one will be generated.
         /// 
         /// This behaviour can be disabled by setting this parameter to null or an empty string.
         /// </param>
-        /// <param name="azureTablePrefix">If you need to avoid table name conflicts</param>
         /// <returns></returns>
         public static IAppBuilder UseHttpLogger(this IAppBuilder appBuilder,
             IHttpLoggerRepository loggerRepository,
@@ -42,7 +41,7 @@ namespace AccidentalFish.ApplicationSupport.Owin
             bool captureResponseData = false,
             string[] captureRequestHeaders = null,
             string[] captureResponseHeaders = null,
-            string httpCorrelationHeaderKey = "http-correlation-id")
+            string httpCorrelationHeaderKey = "correlation-id")
         {
             appBuilder.Use<HttpLogger>(
                 loggerRepository,
@@ -52,6 +51,26 @@ namespace AccidentalFish.ApplicationSupport.Owin
                 captureRequestHeaders,
                 captureResponseHeaders,
                 httpCorrelationHeaderKey);
+            return appBuilder;
+        }
+
+        /// <summary>
+        /// Use this to add a correlation ID to your http responses and requests to enable the correlation of events
+        /// across multiple services and clients.
+        /// 
+        /// By default the correlation ID is stored in a header with the name correlation-id but this can be changed
+        /// with the httpCorrelationHeaderKey parameter.
+        /// 
+        /// If the request has an existing correlation header then this is added to the request, if no header is present
+        /// then a GUID is generated and used as the ID and added to both the request and the response.
+        /// </summary>
+        /// <param name="appBuilder">The OWIN app builder</param>
+        /// <param name="httpCorrelationHeaderKey">The name of the header to store the correlation ID in.</param>
+        /// <returns></returns>
+        public static IAppBuilder UseHttpCorrelator(this IAppBuilder appBuilder,
+            string httpCorrelationHeaderKey = "correlation-id")
+        {
+            appBuilder.Use<HttpCorrelator>(httpCorrelationHeaderKey);
             return appBuilder;
         }
     }

@@ -8,7 +8,7 @@ using Microsoft.Owin;
 
 namespace AccidentalFish.ApplicationSupport.Owin
 {
-    public sealed class HttpLogger : OwinMiddleware
+    public sealed class HttpLogger : AbstractHttpCorrelator
     {
         private readonly IHttpLoggerRepository _httpLoggerRepository;
         private readonly bool _captureRequestParams;
@@ -16,7 +16,6 @@ namespace AccidentalFish.ApplicationSupport.Owin
         private readonly bool _captureResponseData;
         private readonly string[] _captureRequestHeaders;
         private readonly string[] _captureResponseHeaders;
-        private readonly string _httpCorrelationHeaderKey;
         
         public HttpLogger(OwinMiddleware next,
             IHttpLoggerRepository httpLoggerRepository,
@@ -25,7 +24,7 @@ namespace AccidentalFish.ApplicationSupport.Owin
             bool captureResponseData,
             string[] captureRequestHeaders,
             string[] captureResponseHeaders,
-            string httpCorrelationHeaderKey) : base(next)
+            string httpCorrelationHeaderKey) : base(next, httpCorrelationHeaderKey)
         {
             _httpLoggerRepository = httpLoggerRepository;
             _captureRequestParams = captureRequestParams;
@@ -33,7 +32,6 @@ namespace AccidentalFish.ApplicationSupport.Owin
             _captureResponseData = captureResponseData;
             _captureRequestHeaders = captureRequestHeaders;
             _captureResponseHeaders = captureResponseHeaders;
-            _httpCorrelationHeaderKey = httpCorrelationHeaderKey;
         }
 
         public override async Task Invoke(IOwinContext context)
@@ -46,9 +44,9 @@ namespace AccidentalFish.ApplicationSupport.Owin
             sw.Start();
             string httpCorrelationId = Guid.NewGuid().ToString();
 
-            if (!string.IsNullOrWhiteSpace(_httpCorrelationHeaderKey))
+            if (!string.IsNullOrWhiteSpace(HttpCorrelationHeaderKey))
             {
-                httpCorrelationId = UseHttpTrackingIdInRequestAndResponse(context, request);
+                httpCorrelationId = UseHttpTrackingIdInRequestAndResponse(context);
             }
 
             await Next.Invoke(context);
@@ -66,7 +64,6 @@ namespace AccidentalFish.ApplicationSupport.Owin
             Dictionary<string, string[]> responseHeaders = CaptureHeaders(_captureResponseHeaders, response.Headers);
 
             await _httpLoggerRepository.Log(uriToLog, didStripQueryParams, httpCorrelationId, requestTime, sw.ElapsedMilliseconds, requestHeaders, responseHeaders);
-
         }
 
         private Dictionary<string, string[]> CaptureHeaders(IReadOnlyCollection<string> captureHeaders, IHeaderDictionary headers)
@@ -105,27 +102,5 @@ namespace AccidentalFish.ApplicationSupport.Owin
             }
             return capturedHeaders;
         } 
-
-        private string UseHttpTrackingIdInRequestAndResponse(IOwinContext context, IOwinRequest request)
-        {
-            Guid httpTrackingId;
-            string[] httpTrackingIdAsString;
-            if (request.Headers.TryGetValue(_httpCorrelationHeaderKey, out httpTrackingIdAsString))
-            {
-                httpTrackingId = Guid.Parse(httpTrackingIdAsString[0]);
-            }
-            else
-            {
-                httpTrackingId = Guid.NewGuid();
-                request.Headers.Append(_httpCorrelationHeaderKey, httpTrackingId.ToString());
-            }
-
-            context.Response.OnSendingHeaders(responseCtx =>
-            {
-                IOwinContext headerContext = (IOwinContext) responseCtx;
-                headerContext.Response.Headers.Set(_httpCorrelationHeaderKey, httpTrackingId.ToString());
-            }, context);
-            return httpTrackingId.ToString();
-        }
     }
 }

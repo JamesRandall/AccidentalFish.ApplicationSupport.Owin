@@ -12,6 +12,9 @@ rm *.nupkg
 
 .\nuget pack .\AccidentalFish.ApplicationSupport.Owin\AccidentalFish.ApplicationSupport.Owin.csproj
 .\nuget pack .\AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Azure.csproj -IncludeReferencedProjects
+.\nuget pack .\AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Mvc.csproj -IncludeReferencedProjects
+.\nuget pack .\AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.WebApi.csproj -IncludeReferencedProjects
+
 
 if ($pushLocal)
 {

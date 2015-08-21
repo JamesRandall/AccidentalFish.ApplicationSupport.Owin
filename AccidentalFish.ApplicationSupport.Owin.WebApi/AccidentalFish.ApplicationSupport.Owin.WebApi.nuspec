@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://raw.githubusercontent.com/JamesRandall/AccidentalFish.ApplicationSupport.Owin/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/JamesRandall/AccidentalFish.ApplicationSupport.Owin</projectUrl>
+    <iconUrl>http://www.accidentalfish.com/nugetidentity.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <releaseNotes>Web API filters that support AccidentalFish.ApplicationSupport.Owin</releaseNotes>
+    <copyright>Copyright 2015</copyright>
+    <tags>owin http interception logging azure website asp aspnet diagnostics azure table storage</tags>
+  </metadata>
+</package>

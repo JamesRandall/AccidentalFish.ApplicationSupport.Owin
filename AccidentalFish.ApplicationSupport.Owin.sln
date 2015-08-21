@@ -14,10 +14,16 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Nuget", "Nuget", "{10FAF529-76F8-4C1F-AF6E-0BD7C83BA991}"
 	ProjectSection(SolutionItems) = preProject
 		AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Azure.nuspec = AccidentalFish.ApplicationSupport.Owin.Azure\AccidentalFish.ApplicationSupport.Owin.Azure.nuspec
+		AccidentalFish.ApplicationSupport.Owin.Mvc\AccidentalFish.ApplicationSupport.Owin.Mvc.nuspec = AccidentalFish.ApplicationSupport.Owin.Mvc\AccidentalFish.ApplicationSupport.Owin.Mvc.nuspec
 		AccidentalFish.ApplicationSupport.Owin\AccidentalFish.ApplicationSupport.Owin.nuspec = AccidentalFish.ApplicationSupport.Owin\AccidentalFish.ApplicationSupport.Owin.nuspec
+		AccidentalFish.ApplicationSupport.Owin.WebApi\AccidentalFish.ApplicationSupport.Owin.WebApi.nuspec = AccidentalFish.ApplicationSupport.Owin.WebApi\AccidentalFish.ApplicationSupport.Owin.WebApi.nuspec
 		AssemblyInfoCommon.cs = AssemblyInfoCommon.cs
 		package-nuget.ps1 = package-nuget.ps1
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccidentalFish.ApplicationSupport.Owin.WebApi", "AccidentalFish.ApplicationSupport.Owin.WebApi\AccidentalFish.ApplicationSupport.Owin.WebApi.csproj", "{6CBC0F51-DC97-42AB-9514-2CFF13D0FCE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AccidentalFish.ApplicationSupport.Owin.Mvc", "AccidentalFish.ApplicationSupport.Owin.Mvc\AccidentalFish.ApplicationSupport.Owin.Mvc.csproj", "{522C04F4-99B1-4EBB-8FFB-62C3879AA1C4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,6 +43,14 @@ Global
 		{F4B63FDD-C252-448A-8B34-40845780B93A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4B63FDD-C252-448A-8B34-40845780B93A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4B63FDD-C252-448A-8B34-40845780B93A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CBC0F51-DC97-42AB-9514-2CFF13D0FCE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CBC0F51-DC97-42AB-9514-2CFF13D0FCE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CBC0F51-DC97-42AB-9514-2CFF13D0FCE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CBC0F51-DC97-42AB-9514-2CFF13D0FCE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{522C04F4-99B1-4EBB-8FFB-62C3879AA1C4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{522C04F4-99B1-4EBB-8FFB-62C3879AA1C4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{522C04F4-99B1-4EBB-8FFB-62C3879AA1C4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{522C04F4-99B1-4EBB-8FFB-62C3879AA1C4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

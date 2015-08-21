@@ -44,7 +44,7 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
         /// <param name="captureResponseHeaders">To capture all response headers set a single array element of "*" otherwise specify the headers you wish to capture.</param>
         /// <param name="httpCorrelationHeaderKey">
         /// In order to tie together request and response logging the http logger needs a correlation ID. By default this is added to request and response
-        /// headers so that HTTP logging can be tied together across services and clients. The default name for this header is http-correlation-id. If a
+        /// headers so that HTTP logging can be tied together across services and clients. The default name for this header is correlation-id. If a
         /// correlation ID is passed in in the header then it will be used, if no correlation ID is passed in then one will be generated.
         /// 
         /// This behaviour can be disabled by setting this parameter to null or an empty string.
@@ -60,7 +60,7 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
             bool captureResponseData = false,
             string[] captureRequestHeaders = null,
             string[] captureResponseHeaders = null,
-            string httpCorrelationHeaderKey = "http-correlation-id",
+            string httpCorrelationHeaderKey = "correlation-id",
             string azurePrefix = "",
             LogByDateGranularityEnum granularity = LogByDateGranularityEnum.Hour)
         {

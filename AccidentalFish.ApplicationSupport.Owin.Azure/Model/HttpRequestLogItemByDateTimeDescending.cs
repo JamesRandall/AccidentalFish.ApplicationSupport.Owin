@@ -6,6 +6,11 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure.Model
     {
         public static string FormatRowKey(string httpCorrelationId, DateTimeOffset requestDateTime, Guid logItemId)
         {
+            if (httpCorrelationId == null)
+            {
+                httpCorrelationId = "";
+            }
+            
             return $"{DateTime.MaxValue.Ticks - requestDateTime.Ticks:D19} {httpCorrelationId}_{logItemId}";
         }
 

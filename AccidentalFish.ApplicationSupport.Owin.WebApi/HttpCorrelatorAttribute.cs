@@ -26,16 +26,27 @@ namespace AccidentalFish.ApplicationSupport.Owin.WebApi
     {
         private readonly string _correlationIdName;
 
+        /// <summary>
+        /// Constructor - defaults to a correlation header name of correlation-id
+        /// </summary>
         public HttpCorrelatorAttribute()
         {
             _correlationIdName = "correlation-id";
         }
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="correlationIdName">The name of the correlation ID header</param>
         public HttpCorrelatorAttribute(string correlationIdName)
         {
             _correlationIdName = correlationIdName;
         }
 
+        /// <summary>
+        /// Moves the correlation ID, if it exists, into the call context using a object key of the header name
+        /// </summary>
+        /// <param name="filterContext"></param>
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             IEnumerable<string> headerValues = HttpContext.Current.Request.Headers.GetValues(_correlationIdName);

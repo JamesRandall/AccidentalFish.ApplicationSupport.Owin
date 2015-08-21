@@ -2,38 +2,59 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Owin;
 
 namespace AccidentalFish.ApplicationSupport.Owin
 {
+    /// <summary>
+    /// OWIN middleware that logs http requests and responses to a provided repository
+    /// </summary>
     public sealed class HttpLogger : AbstractHttpCorrelator
     {
         private readonly IHttpLoggerRepository _httpLoggerRepository;
         private readonly bool _captureRequestParams;
-        private readonly bool _captureRequestData;
-        private readonly bool _captureResponseData;
-        private readonly string[] _captureRequestHeaders;
-        private readonly string[] _captureResponseHeaders;
-        
+        //private readonly bool _captureRequestData;
+        //private readonly bool _captureResponseData;
+        private readonly IReadOnlyCollection<string> _captureRequestHeaders;
+        private readonly IReadOnlyCollection<string> _captureResponseHeaders;
+
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="next">The next piece of middleware to call</param>
+        /// <param name="httpLoggerRepository">The repository to store the http information in</param>
+        /// <param name="captureRequestParams">True if query parameters should be captured, false if they should be removed</param>
+        /// <param name="captureRequestData">True if request data should be persisted to storage, false if not. Currently true is unsupported.</param>
+        /// <param name="captureResponseData">True if response data should be persisted to storage, false if not. Currently true is unsupported.</param>
+        /// <param name="captureRequestHeaders">The set of request headers to capture, a single item of "*" for all headers</param>
+        /// <param name="captureResponseHeaders">The set of response headers to capture, a single item of "*" for all headers</param>
+        /// <param name="httpCorrelationHeaderKey">The name of the header to use for a correlation ID</param>
         public HttpLogger(OwinMiddleware next,
             IHttpLoggerRepository httpLoggerRepository,
             bool captureRequestParams,
             bool captureRequestData,
             bool captureResponseData,
-            string[] captureRequestHeaders,
-            string[] captureResponseHeaders,
+            IEnumerable<string> captureRequestHeaders,
+            IEnumerable<string> captureResponseHeaders,
             string httpCorrelationHeaderKey) : base(next, httpCorrelationHeaderKey)
         {
+            if (captureRequestData || captureResponseData)
+            {
+                throw new NotSupportedException("Not yet supported - arriving in v1");
+            }
+            
             _httpLoggerRepository = httpLoggerRepository;
             _captureRequestParams = captureRequestParams;
-            _captureRequestData = captureRequestData;
-            _captureResponseData = captureResponseData;
-            _captureRequestHeaders = captureRequestHeaders;
-            _captureResponseHeaders = captureResponseHeaders;
+            //_captureRequestData = captureRequestData;
+            //_captureResponseData = captureResponseData;
+            _captureRequestHeaders = captureRequestHeaders.ToArray();
+            _captureResponseHeaders = captureResponseHeaders.ToArray();
         }
 
+        /// <summary>
+        /// Owin middleware invoker
+        /// </summary>
         public override async Task Invoke(IOwinContext context)
         {
             IOwinRequest request = context.Request;

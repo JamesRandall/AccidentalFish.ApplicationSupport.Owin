@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Owin;
+﻿using Owin;
 
 namespace AccidentalFish.ApplicationSupport.Owin
 {
+    /// <summary>
+    /// Extends the IAppBuilder with extensions for adding a HTTP logger and HTTP correlation ID manager
+    /// </summary>
     // ReSharper disable once InconsistentNaming
     public static class IAppBuilderExtensions
     {

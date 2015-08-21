@@ -1,23 +1,34 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Owin;
 
 namespace AccidentalFish.ApplicationSupport.Owin
 {
+    /// <summary>
+    /// Base class for middleware that requires a correlation ID
+    /// </summary>
     public abstract class AbstractHttpCorrelator : OwinMiddleware
     {
         private readonly string _httpCorrelationHeaderKey;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="next">The next piece of OWIN middleware to invoke</param>
+        /// <param name="httpCorrelationHeaderKey">The name of the header to use for the correlation ID</param>
         protected AbstractHttpCorrelator(OwinMiddleware next, string httpCorrelationHeaderKey) : base(next)
         {
             _httpCorrelationHeaderKey = httpCorrelationHeaderKey;
         }
 
+        /// <summary>
+        /// Adds the correlation ID to the request if not already present and ads it to the response
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns>The correlation ID that was already present or the one assigned</returns>
         protected string UseHttpTrackingIdInRequestAndResponse(IOwinContext context)
         {
+            if (String.IsNullOrWhiteSpace(_httpCorrelationHeaderKey)) return null;
+
             Guid httpTrackingId;
             string[] httpTrackingIdAsString;
             IOwinRequest request = context.Request;
@@ -39,6 +50,9 @@ namespace AccidentalFish.ApplicationSupport.Owin
             return httpTrackingId.ToString();
         }
 
+        /// <summary>
+        /// The name of the header to store the correlation ID in
+        /// </summary>
         protected string HttpCorrelationHeaderKey => _httpCorrelationHeaderKey;
     }
 }

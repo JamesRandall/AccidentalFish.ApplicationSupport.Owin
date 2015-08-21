@@ -10,6 +10,10 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
 {
     // TODO: This logger is currently somewhat naive. It undertakes its I/O operations during the HTTP request / response chain which
     // does add overhead, potentially significant if transient faults occur, to the response time. Consider batching / background updating.
+
+    /// <summary>
+    /// A http logger that utilises Azure table storage
+    /// </summary>
     public class AzureHttpLoggerRepository : IHttpLoggerRepository
     {
         private const string RequestByCorrelationIdTableName = "httprequestbycorrelationid";
@@ -18,6 +22,12 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
         private readonly CloudTable _byDateTimeDescendingTable;
         private readonly string _granularPartitionKeyFormat;
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="storageConnectionString">Storage account connection string</param>
+        /// <param name="azureTablePrefix">The repository stores data in two tables called httprequestbycorrelationid and httprequestbydatedescending, if this parameter is not null and not whitespace then it is used as a prefix for those table names.</param>
+        /// <param name="granularity">The level of granularity for data in the partition. On a low traffic site hourly or even daily can be useful, whereas busy sites minute or second are more useful.</param>
         public AzureHttpLoggerRepository(string storageConnectionString, string azureTablePrefix, LogByDateGranularityEnum granularity)
         {
             if (string.IsNullOrWhiteSpace(storageConnectionString)) throw new ArgumentNullException(nameof(storageConnectionString));
@@ -53,10 +63,21 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
             }
         }
 
+        /// <summary>
+        /// Logs the information to a store
+        /// </summary>
+        /// <param name="uriToLog">The URI to log. Will contain query parameters if didStripQueryParams is false.</param>
+        /// <param name="didStripQueryParams">Have query parameters been stripped from the URI.</param>
+        /// <param name="httpCorrelationId">The correlation ID if available</param>
+        /// <param name="requestDateTime">The date and time the request arrived at the OWIN middleware</param>
+        /// <param name="ellapsedMilliseconds">The time taken to process the request (the time between entering the middleware and exiting it)</param>
+        /// <param name="requestHeaders">Any request headers and their values</param>
+        /// <param name="responseHeaders">Any response headers and their values</param>
+        /// <returns>Task</returns>
         public async Task Log(
             string uriToLog,
             bool didStripQueryParams,
-            string httpCorrelationId,
+            string correlationId,
             DateTimeOffset requestDateTime,
             long ellapsedMilliseconds,
             Dictionary<string, string[]> requestHeaders,
@@ -68,31 +89,32 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
                 logItemId,
                 uriToLog, 
                 didStripQueryParams, 
-                httpCorrelationId, 
+                correlationId, 
                 requestDateTime, 
                 ellapsedMilliseconds, 
                 requestHeaders,
                 responseHeaders);
 
             DynamicTableEntity byCorrelationId = new DynamicTableEntity(
-                HttpRequestLogItemByCorrelationId.FormatPartitionKey(httpCorrelationId),
-                HttpRequestLogItemByCorrelationId.FormatRowKey(requestDateTime, logItemId),
-                "*",
-                properties);
-
+            HttpRequestLogItemByCorrelationId.FormatPartitionKey(correlationId),
+            HttpRequestLogItemByCorrelationId.FormatRowKey(requestDateTime, logItemId),
+            "*",
+            properties);
+            
             DynamicTableEntity byDateTimeDescending = new DynamicTableEntity(
                 HttpRequestLogItemByDateTimeDescending.FormatPartitionKey(requestDateTime, _granularPartitionKeyFormat),
-                HttpRequestLogItemByDateTimeDescending.FormatRowKey(httpCorrelationId, requestDateTime, logItemId),
+                HttpRequestLogItemByDateTimeDescending.FormatRowKey(correlationId, requestDateTime, logItemId),
                 "*",
                 properties);
 
-            await Task.WhenAll(
+            await Task.WhenAll(new[]
+            {
                 _byCorrelationIdTable.ExecuteAsync(TableOperation.Insert(byCorrelationId)),
                 _byDateTimeDescendingTable.ExecuteAsync(TableOperation.Insert(byDateTimeDescending))
-                );
+            });
         }
 
-        private static Dictionary<string, EntityProperty> CreateProperties(Guid logItemId, string uriToLog, bool didStripQueryParams, string httpCorrelationId,
+        private static Dictionary<string, EntityProperty> CreateProperties(Guid logItemId, string uriToLog, bool didStripQueryParams, string correlationId,
             DateTimeOffset requestDateTime, long ellapsedMilliseconds, Dictionary<string, string[]> requestHeaders, Dictionary<string, string[]> responseHeaders)
         {
             Dictionary<string, EntityProperty> requestProperties = new Dictionary<string, EntityProperty>
@@ -100,7 +122,7 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
                 {"LogItemId", new EntityProperty(logItemId) },
                 {"Url", new EntityProperty(uriToLog)},
                 {"DidStripQueryParams", new EntityProperty(didStripQueryParams)},
-                {"HttpCorrelationId", new EntityProperty(httpCorrelationId)},
+                {"CorrelationId", new EntityProperty(correlationId)},
                 {"ElapsedMilliseconds", new EntityProperty(ellapsedMilliseconds)},
                 {"RequestDateTime", new EntityProperty(requestDateTime)}
             };

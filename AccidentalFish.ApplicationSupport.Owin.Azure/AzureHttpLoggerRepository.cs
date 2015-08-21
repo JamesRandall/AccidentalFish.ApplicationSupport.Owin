@@ -68,7 +68,7 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
         /// </summary>
         /// <param name="uriToLog">The URI to log. Will contain query parameters if didStripQueryParams is false.</param>
         /// <param name="didStripQueryParams">Have query parameters been stripped from the URI.</param>
-        /// <param name="httpCorrelationId">The correlation ID if available</param>
+        /// <param name="correlationId">The correlation ID if available</param>
         /// <param name="requestDateTime">The date and time the request arrived at the OWIN middleware</param>
         /// <param name="ellapsedMilliseconds">The time taken to process the request (the time between entering the middleware and exiting it)</param>
         /// <param name="requestHeaders">Any request headers and their values</param>

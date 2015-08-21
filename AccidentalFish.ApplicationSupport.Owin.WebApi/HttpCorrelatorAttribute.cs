@@ -46,7 +46,6 @@ namespace AccidentalFish.ApplicationSupport.Owin.WebApi
         /// <summary>
         /// Moves the correlation ID, if it exists, into the call context using a object key of the header name
         /// </summary>
-        /// <param name="filterContext"></param>
         public override void OnActionExecuting(HttpActionContext actionContext)
         {
             IEnumerable<string> headerValues = HttpContext.Current.Request.Headers.GetValues(_correlationIdName);

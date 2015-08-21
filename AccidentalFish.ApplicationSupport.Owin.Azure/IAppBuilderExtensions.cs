@@ -8,13 +8,28 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
     /// </summary>
     public enum LogByDateGranularityEnum
     {
+        /// <summary>
+        /// Group the partition key by day
+        /// </summary>
         Day,
+        /// <summary>
+        /// Group the partition key by hour
+        /// </summary>
         Hour,
+        /// <summary>
+        /// Group the partition key by minute
+        /// </summary>
         Minute,
+        /// <summary>
+        /// Group the partition key by second
+        /// </summary>
         Second
     }
 
     // ReSharper disable once InconsistentNaming
+    /// <summary>
+    /// IAppBuilder extension methods for configuring the HTTP logger with the Azure repository
+    /// </summary>
     public static class IAppBuilderExtensions
     {
         /// <summary>

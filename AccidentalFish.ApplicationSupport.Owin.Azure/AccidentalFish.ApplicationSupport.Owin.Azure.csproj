@@ -20,7 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\docs\AccidentalFish.ApplicationSupport.Owin.Azure.XML</DocumentationFile>
+    <DocumentationFile>bin\Debug\AccidentalFish.ApplicationSupport.Owin.Azure.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

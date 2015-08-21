@@ -11,7 +11,7 @@ namespace HttpLogger
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder appBuilder)
         {
-            appBuilder.UseAzureHttpLogger("DefaultEndpointsProtocol=https;AccountName=applicationsupport;AccountKey=/VxOZ9YSgtWlzbyvIelMH4QBaMdFc58DE0pgk/N1g7yoAMvyZy6lFfO5c7/AMcyTRU2SE4PNnVNUGoWWe1Zn8g==",
+            appBuilder.UseAzureHttpLogger("DefaultEndpointsProtocol=https;AccountName=<accountname>;AccountKey=<accountkey>",
                 captureRequestParams:true,
                 captureRequestHeaders: new [] {"Connection"},
                 captureResponseHeaders:new [] { "*" });

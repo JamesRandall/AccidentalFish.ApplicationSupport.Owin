@@ -11,10 +11,13 @@ namespace HttpLogger
         // parameter in the WebApp.Start method.
         public void Configuration(IAppBuilder appBuilder)
         {
-            appBuilder.UseAzureHttpLogger("DefaultEndpointsProtocol=https;AccountName=<accountname>;AccountKey=<accountkey>",
+            appBuilder.UseHttpCorrelator();
+            appBuilder.UseAzureHttpLogger(
+                "DefaultEndpointsProtocol=https;AccountName=<accountname>;AccountKey=<accountkey>",
                 captureRequestParams:true,
                 captureRequestHeaders: new [] {"Connection"},
-                captureResponseHeaders:new [] { "*" });
+                captureResponseHeaders:new [] { "*" }
+            );
 
             // Configure Web API for self-host. 
             HttpConfiguration config = new HttpConfiguration();

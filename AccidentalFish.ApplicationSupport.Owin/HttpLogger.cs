@@ -10,10 +10,11 @@ namespace AccidentalFish.ApplicationSupport.Owin
     /// <summary>
     /// OWIN middleware that logs http requests and responses to a provided repository
     /// </summary>
-    public sealed class HttpLogger : AbstractHttpCorrelator
+    public sealed class HttpLogger : OwinMiddleware
     {
         private readonly IHttpLoggerRepository _httpLoggerRepository;
         private readonly bool _captureRequestParams;
+        private readonly string _httpCorrelationHeaderKey;
         //private readonly bool _captureRequestData;
         //private readonly bool _captureResponseData;
         private readonly IReadOnlyCollection<string> _captureRequestHeaders;
@@ -37,7 +38,7 @@ namespace AccidentalFish.ApplicationSupport.Owin
             bool captureResponseData,
             IEnumerable<string> captureRequestHeaders,
             IEnumerable<string> captureResponseHeaders,
-            string httpCorrelationHeaderKey) : base(next, httpCorrelationHeaderKey)
+            string httpCorrelationHeaderKey) : base(next)
         {
             if (captureRequestData || captureResponseData)
             {
@@ -46,6 +47,7 @@ namespace AccidentalFish.ApplicationSupport.Owin
             
             _httpLoggerRepository = httpLoggerRepository;
             _captureRequestParams = captureRequestParams;
+            _httpCorrelationHeaderKey = httpCorrelationHeaderKey;
             //_captureRequestData = captureRequestData;
             //_captureResponseData = captureResponseData;
             _captureRequestHeaders = captureRequestHeaders.ToArray();
@@ -63,11 +65,11 @@ namespace AccidentalFish.ApplicationSupport.Owin
             DateTimeOffset requestTime = DateTimeOffset.UtcNow;
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            string httpCorrelationId = Guid.NewGuid().ToString();
-
-            if (!string.IsNullOrWhiteSpace(HttpCorrelationHeaderKey))
+            string httpCorrelationId = null;
+            string[] correlationIdValues;
+            if (request.Headers.TryGetValue(_httpCorrelationHeaderKey, out correlationIdValues))
             {
-                httpCorrelationId = UseHttpTrackingIdInRequestAndResponse(context);
+                httpCorrelationId = correlationIdValues.First();
             }
 
             await Next.Invoke(context);

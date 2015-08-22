@@ -52,7 +52,6 @@
     <Compile Include="..\AssemblyInfoCommon.cs">
       <Link>Properties\AssemblyInfoCommon.cs</Link>
     </Compile>
-    <Compile Include="AbstractHttpCorrelator.cs" />
     <Compile Include="HttpCorrelator.cs" />
     <Compile Include="HttpLogger.cs" />
     <Compile Include="IAppBuilderExtensions.cs" />

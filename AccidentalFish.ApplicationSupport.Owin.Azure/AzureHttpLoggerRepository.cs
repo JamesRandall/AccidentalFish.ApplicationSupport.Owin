@@ -98,23 +98,26 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
                 requestHeaders,
                 responseHeaders);
 
-            DynamicTableEntity byCorrelationId = new DynamicTableEntity(
-            HttpRequestLogItemByCorrelationId.FormatPartitionKey(correlationId),
-            HttpRequestLogItemByCorrelationId.FormatRowKey(requestDateTime, logItemId),
-            "*",
-            properties);
+            List<Task> tasks = new List<Task>();
+            if (!String.IsNullOrWhiteSpace(correlationId))
+            {
+                DynamicTableEntity byCorrelationId = new DynamicTableEntity(
+                    HttpRequestLogItemByCorrelationId.FormatPartitionKey(correlationId),
+                    HttpRequestLogItemByCorrelationId.FormatRowKey(requestDateTime, logItemId),
+                    "*",
+                    properties);
+                tasks.Add(_byCorrelationIdTable.ExecuteAsync(TableOperation.Insert(byCorrelationId)));
+            }
+            
             
             DynamicTableEntity byDateTimeDescending = new DynamicTableEntity(
                 HttpRequestLogItemByDateTimeDescending.FormatPartitionKey(requestDateTime, _granularPartitionKeyFormat),
                 HttpRequestLogItemByDateTimeDescending.FormatRowKey(correlationId, requestDateTime, logItemId),
                 "*",
                 properties);
+            tasks.Add(_byDateTimeDescendingTable.ExecuteAsync(TableOperation.Insert(byDateTimeDescending)));
 
-            await Task.WhenAll(new[]
-            {
-                _byCorrelationIdTable.ExecuteAsync(TableOperation.Insert(byCorrelationId)),
-                _byDateTimeDescendingTable.ExecuteAsync(TableOperation.Insert(byDateTimeDescending))
-            });
+            await Task.WhenAll(tasks);
         }
 
         private static Dictionary<string, EntityProperty> CreateProperties(Guid logItemId, string uriToLog, bool didStripQueryParams, string verb, string correlationId,

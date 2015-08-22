@@ -58,11 +58,12 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
         /// <param name="captureRequestHeaders">To capture all request headers set a single array element of "*" otherwise specify the headers you wish to capture.</param>
         /// <param name="captureResponseHeaders">To capture all response headers set a single array element of "*" otherwise specify the headers you wish to capture.</param>
         /// <param name="httpCorrelationHeaderKey">
-        /// In order to tie together request and response logging the http logger needs a correlation ID. By default this is added to request and response
-        /// headers so that HTTP logging can be tied together across services and clients. The default name for this header is correlation-id. If a
-        /// correlation ID is passed in in the header then it will be used, if no correlation ID is passed in then one will be generated.
+        /// It can be helpful when calling across http boundaries to be able to tie together the flow of events with a correlation ID and by default the logger
+        /// looks for a correlation ID in the header correlation-id. If the header is missing then no correlation ID is used but the logger will work. If you
+        /// wish to disable this behaviour then set this to null or if you want to use a different header then set the header name here.
         /// 
-        /// This behaviour can be disabled by setting this parameter to null or an empty string.
+        /// The HttpCorrelator middleware also in this assembly can be used to add a correlation ID if none is present and should be placed before the logger middleware
+        /// in the pipeline.
         /// </param>
         /// <param name="azurePrefix">If you need to avoid table name conflicts</param>
         /// <param name="granularity">Sets the level of granularity on the partition key of the httprequestbydatedescending table. Busier your site likely the more granular you want

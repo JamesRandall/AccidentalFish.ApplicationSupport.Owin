@@ -166,14 +166,22 @@ The respective Web Api and MVC NuGet packages contain a HttpCorrelatorAttribute 
 The easiest way to use them is to add them as global filters.
 
 In a typical Web Api project this can be done in App_Start\WebAPIConfig.cs by adding a line:
-    config.Filters.Add(new HttpCorrelatorAttribute());
+```
+config.Filters.Add(new HttpCorrelatorAttribute());
+```
     
 In a typical MVC project this can be done in App_Start\FilterConfig.cs by adding a line:
-    filters.Add(new HttpCorrelatorAttribute());
+```
+filters.Add(new HttpCorrelatorAttribute());
+```
     
 By default the filters look for a header named correlation-id (the same default as the OWIN middleware) but both attributes take an optional constructor parameter that allows you to specify the HTTP header the correlation ID can be found in:
-    filters.Add(new HttpCorrelatorAttribute("my-correlation-id"));
+```
+filters.Add(new HttpCorrelatorAttribute("my-correlation-id"));
+```
 
 The call context data is set using the same key as the header name and can be subsequently retrieved using code such as:
-    object correlationId = CallContext.LogicalGetData("correlation-id");
+```
+object correlationId = CallContext.LogicalGetData("correlation-id");
+```
     

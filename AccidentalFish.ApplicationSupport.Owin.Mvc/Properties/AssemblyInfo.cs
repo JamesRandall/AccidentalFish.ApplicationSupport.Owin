@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("AccidentalFish.ApplicationSupport.Owin.Mvc")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("MVC filters that support AccidentalFish.ApplicationSupport.Owin")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyProduct("AccidentalFish.ApplicationSupport.Owin.Mvc")]
 [assembly: AssemblyTrademark("")]

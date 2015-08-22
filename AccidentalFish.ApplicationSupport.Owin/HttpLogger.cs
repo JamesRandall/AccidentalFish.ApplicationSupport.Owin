@@ -80,11 +80,11 @@ namespace AccidentalFish.ApplicationSupport.Owin
                 uriToLog = uriToLog.Substring(0, uriToLog.Length - request.QueryString.Value.Length - 1);
                 didStripQueryParams = true;
             }
-
+            string verb = request.Method;
             Dictionary<string, string[]> requestHeaders = CaptureHeaders(_captureRequestHeaders, request.Headers);
             Dictionary<string, string[]> responseHeaders = CaptureHeaders(_captureResponseHeaders, response.Headers);
 
-            await _httpLoggerRepository.Log(uriToLog, didStripQueryParams, httpCorrelationId, requestTime, sw.ElapsedMilliseconds, requestHeaders, responseHeaders);
+            await _httpLoggerRepository.Log(uriToLog, didStripQueryParams, verb, httpCorrelationId, requestTime, sw.ElapsedMilliseconds, requestHeaders, responseHeaders);
         }
 
         private Dictionary<string, string[]> CaptureHeaders(IReadOnlyCollection<string> captureHeaders, IHeaderDictionary headers)

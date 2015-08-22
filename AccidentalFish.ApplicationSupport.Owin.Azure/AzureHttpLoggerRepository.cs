@@ -68,6 +68,7 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
         /// </summary>
         /// <param name="uriToLog">The URI to log. Will contain query parameters if didStripQueryParams is false.</param>
         /// <param name="didStripQueryParams">Have query parameters been stripped from the URI.</param>
+        /// <param name="verb">The HTTP verb used during the request</param>
         /// <param name="correlationId">The correlation ID if available</param>
         /// <param name="requestDateTime">The date and time the request arrived at the OWIN middleware</param>
         /// <param name="ellapsedMilliseconds">The time taken to process the request (the time between entering the middleware and exiting it)</param>
@@ -77,6 +78,7 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
         public async Task Log(
             string uriToLog,
             bool didStripQueryParams,
+            string verb,
             string correlationId,
             DateTimeOffset requestDateTime,
             long ellapsedMilliseconds,
@@ -88,7 +90,8 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
             Dictionary<string, EntityProperty> properties = CreateProperties(
                 logItemId,
                 uriToLog, 
-                didStripQueryParams, 
+                didStripQueryParams,
+                verb,
                 correlationId, 
                 requestDateTime, 
                 ellapsedMilliseconds, 
@@ -114,7 +117,7 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
             });
         }
 
-        private static Dictionary<string, EntityProperty> CreateProperties(Guid logItemId, string uriToLog, bool didStripQueryParams, string correlationId,
+        private static Dictionary<string, EntityProperty> CreateProperties(Guid logItemId, string uriToLog, bool didStripQueryParams, string verb, string correlationId,
             DateTimeOffset requestDateTime, long ellapsedMilliseconds, Dictionary<string, string[]> requestHeaders, Dictionary<string, string[]> responseHeaders)
         {
             Dictionary<string, EntityProperty> requestProperties = new Dictionary<string, EntityProperty>
@@ -122,6 +125,7 @@ namespace AccidentalFish.ApplicationSupport.Owin.Azure
                 {"LogItemId", new EntityProperty(logItemId) },
                 {"Url", new EntityProperty(uriToLog)},
                 {"DidStripQueryParams", new EntityProperty(didStripQueryParams)},
+                {"Verb", new EntityProperty(verb) },
                 {"CorrelationId", new EntityProperty(correlationId)},
                 {"ElapsedMilliseconds", new EntityProperty(ellapsedMilliseconds)},
                 {"RequestDateTime", new EntityProperty(requestDateTime)}

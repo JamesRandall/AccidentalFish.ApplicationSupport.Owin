@@ -14,18 +14,18 @@
     <Name>Documentation</Name>
     <!-- SHFB properties -->
     <FrameworkVersion>.NET Framework 4.5.2</FrameworkVersion>
-    <OutputPath>.\Help\</OutputPath>
+    <OutputPath>Help\</OutputPath>
     <HtmlHelpName>Documentation</HtmlHelpName>
     <Language>en-US</Language>
     <DocumentationSources>
-      <DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin\bin\Debug\AccidentalFish.ApplicationSupport.Owin.dll" />
-<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin\bin\Debug\AccidentalFish.ApplicationSupport.Owin.xml" />
-<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.Azure\bin\Debug\AccidentalFish.ApplicationSupport.Owin.Azure.dll" />
+      <DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.Azure\bin\Debug\AccidentalFish.ApplicationSupport.Owin.Azure.dll" />
 <DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.Azure\bin\Debug\AccidentalFish.ApplicationSupport.Owin.Azure.xml" />
-<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.Mvc\bin\Debug\AccidentalFish.ApplicationSupport.Owin.Mvc.dll" />
-<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.Mvc\bin\Debug\AccidentalFish.ApplicationSupport.Owin.Mvc.xml" />
 <DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.WebApi\bin\Debug\AccidentalFish.ApplicationSupport.Owin.WebApi.dll" />
-<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.WebApi\bin\Debug\AccidentalFish.ApplicationSupport.Owin.WebApi.xml" /></DocumentationSources>
+<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.WebApi\bin\Debug\AccidentalFish.ApplicationSupport.Owin.WebApi.xml" />
+<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin\bin\Debug\AccidentalFish.ApplicationSupport.Owin.dll" />
+<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin\bin\Debug\AccidentalFish.ApplicationSupport.Owin.xml" />
+<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.Mvc\bin\Debug\AccidentalFish.ApplicationSupport.Owin.Mvc.dll" />
+<DocumentationSource sourceFile="AccidentalFish.ApplicationSupport.Owin.Mvc\bin\Debug\AccidentalFish.ApplicationSupport.Owin.Mvc.xml" /></DocumentationSources>
     <BuildAssemblerVerbosity>OnlyWarningsAndErrors</BuildAssemblerVerbosity>
     <HelpFileFormat>Website</HelpFileFormat>
     <IndentHtml>False</IndentHtml>
@@ -33,16 +33,22 @@
     <DisableCodeBlockComponent>False</DisableCodeBlockComponent>
     <CleanIntermediates>True</CleanIntermediates>
     <HelpFileVersion>1.0.0.0</HelpFileVersion>
-    <MaximumGroupParts>2</MaximumGroupParts>
+    <MaximumGroupParts>6</MaximumGroupParts>
     <NamespaceGrouping>False</NamespaceGrouping>
     <SyntaxFilters>C#, Visual Basic</SyntaxFilters>
     <SdkLinkTarget>Blank</SdkLinkTarget>
-    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <RootNamespaceContainer>True</RootNamespaceContainer>
     <PresentationStyle>VS2013</PresentationStyle>
     <Preliminary>False</Preliminary>
-    <NamingMethod>Guid</NamingMethod>
+    <NamingMethod>MemberName</NamingMethod>
     <HelpTitle>AccidentalFish.ApplicationSupport.Owin Reference</HelpTitle>
     <ContentPlacement>AboveNamespaces</ContentPlacement>
+    <WorkingPath>DocWorking\</WorkingPath>
+    <NamespaceSummaries>
+      <NamespaceSummaryItem name="AccidentalFish.ApplicationSupport.Owin.Azure" isDocumented="True">Contains classes for using the OWIN middleware in AccidentalFish.ApplicationSupport.Owin with Azure</NamespaceSummaryItem>
+<NamespaceSummaryItem name="AccidentalFish.ApplicationSupport.Owin.WebApi" isDocumented="True">Contains classes for using the OWIN middleware in AccidentalFish.ApplicationSupport.Owin with Web API</NamespaceSummaryItem>
+<NamespaceSummaryItem name="AccidentalFish.ApplicationSupport.Owin" isDocumented="True">Contains OWIN middleware and app builder extensions for using it</NamespaceSummaryItem>
+<NamespaceSummaryItem name="AccidentalFish.ApplicationSupport.Owin.Mvc" isDocumented="True">Contains classes for using the OWIN middleware in AccidentalFish.ApplicationSupport.Owin with Web API</NamespaceSummaryItem></NamespaceSummaries>
   </PropertyGroup>
   <!-- There are no properties for these groups.  AnyCPU needs to appear in order for Visual Studio to perform
 			 the build.  The others are optional common platform types that may appear. -->
